@@ -1,0 +1,261 @@
+{
+  "name": "doc-pi",
+  "displayName": "DOC-pi",
+  "description": "Open and edit documents & spreadsheets in VS Code via OnlyOffice",
+  "version": "0.0.4",
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCustomEditor:doc-pi.onlyofficeEditor"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "docviewer-sidebar",
+          "title": "Doc-pi",
+          "icon": "resources/doc-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "docviewer-sidebar": [
+        {
+          "id": "doc-pi.currentOpenView",
+          "name": "Currently Open",
+          "contextualTitle": "Currently Open Files"
+        },
+        {
+          "id": "doc-pi.historyView",
+          "name": "History",
+          "contextualTitle": "Recent Files History"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "doc-pi.openFile",
+        "title": "Open in OnlyOffice"
+      },
+      {
+        "command": "doc-pi.closeFile",
+        "title": "Close Editor",
+        "icon": "$(close)"
+      },
+      {
+        "command": "doc-pi.removeFile",
+        "title": "Remove from History",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "doc-pi.clearHistory",
+        "title": "Clear All History",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "doc-pi.revealFile",
+        "title": "Reveal in File Explorer",
+        "icon": "$(folder)"
+      },
+      {
+        "command": "doc-pi.refreshOpenFiles",
+        "title": "Refresh Open Files",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "doc-pi.refreshHistory",
+        "title": "Refresh History",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "doc-pi.openSettings",
+        "title": "Configure Settings",
+        "icon": "$(gear)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "doc-pi.refreshOpenFiles",
+          "when": "view == doc-pi.currentOpenView",
+          "group": "navigation@1"
+        },
+        {
+          "command": "doc-pi.openSettings",
+          "when": "view == doc-pi.currentOpenView",
+          "group": "navigation@2"
+        },
+        {
+          "command": "doc-pi.clearHistory",
+          "when": "view == doc-pi.historyView",
+          "group": "navigation@1"
+        },
+        {
+          "command": "doc-pi.refreshHistory",
+          "when": "view == doc-pi.historyView",
+          "group": "navigation@2"
+        },
+        {
+          "command": "doc-pi.openSettings",
+          "when": "view == doc-pi.historyView",
+          "group": "navigation@3"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "doc-pi.closeFile",
+          "when": "viewItem == openFile",
+          "group": "inline@1"
+        },
+        {
+          "command": "doc-pi.removeFile",
+          "when": "viewItem == historyFile",
+          "group": "inline@1"
+        },
+        {
+          "command": "doc-pi.revealFile",
+          "when": "viewItem == openFile || viewItem == historyFile",
+          "group": "context@1"
+        },
+        {
+          "command": "doc-pi.removeFile",
+          "when": "viewItem == historyFile",
+          "group": "context@2"
+        }
+      ]
+    },
+    "customEditors": [
+      {
+        "viewType": "doc-pi.onlyofficeEditor",
+        "displayName": "OnlyOffice Editor",
+        "selector": [
+          { "filenamePattern": "*.docx" },
+          { "filenamePattern": "*.doc" },
+          { "filenamePattern": "*.docm" },
+          { "filenamePattern": "*.dotx" },
+          { "filenamePattern": "*.dotm" },
+          { "filenamePattern": "*.odt" },
+          { "filenamePattern": "*.rtf" },
+          { "filenamePattern": "*.docxf" },
+          { "filenamePattern": "*.oform" },
+          { "filenamePattern": "*.xlsx" },
+          { "filenamePattern": "*.xls" },
+          { "filenamePattern": "*.xlsm" },
+          { "filenamePattern": "*.xltx" },
+          { "filenamePattern": "*.xltm" },
+          { "filenamePattern": "*.ods" },
+          { "filenamePattern": "*.csv" },
+          { "filenamePattern": "*.tsv" },
+          { "filenamePattern": "*.pptx" },
+          { "filenamePattern": "*.ppt" },
+          { "filenamePattern": "*.pptm" },
+          { "filenamePattern": "*.potx" },
+          { "filenamePattern": "*.ppsx" },
+          { "filenamePattern": "*.odp" },
+          { "filenamePattern": "*.pdf" },
+          { "filenamePattern": "*.djvu" },
+          { "filenamePattern": "*.xps" }
+        ],
+        "priority": "default"
+      }
+    ],
+    "configuration": {
+      "title": "DocViewer (OnlyOffice)",
+      "properties": {
+        "doc-pi.wasmUrl": {
+          "type": "string",
+          "default": "http://localhost:8090",
+          "description": "WASM url"
+        },
+        "doc-pi.bridgeHost": {
+          "type": "string",
+          "default": "host.docker.internal",
+          "description": "Hostname or IP address that ONLYOFFICE uses to reach this VS Code machine (use 'host.docker.internal' for Docker or 'localhost' for native)."
+        },
+        "doc-pi.bridgePort": {
+          "type": "number",
+          "default": 30123,
+          "description": "Port for the local HTTP bridge server. Set to 0 to use a dynamic port."
+        },
+        "doc-pi.enabledFileTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "docx", "doc", "docm", "dotx", "dotm", "odt", "rtf", "docxf", "oform",
+            "xlsx", "xls", "xlsm", "xltx", "xltm", "ods", "csv", "tsv",
+            "pptx", "ppt", "pptm", "potx", "ppsx", "odp",
+            "pdf", "djvu", "xps"
+          ],
+          "description": "List of file extensions to open by default with DOC-pi (OnlyOffice)."
+        }
+      }
+    },
+    "configurationDefaults": {
+      "workbench.editorAssociations": {
+        "*.docx": "doc-pi.onlyofficeEditor",
+        "*.doc": "doc-pi.onlyofficeEditor",
+        "*.docm": "doc-pi.onlyofficeEditor",
+        "*.dotx": "doc-pi.onlyofficeEditor",
+        "*.dotm": "doc-pi.onlyofficeEditor",
+        "*.odt": "doc-pi.onlyofficeEditor",
+        "*.rtf": "doc-pi.onlyofficeEditor",
+        "*.docxf": "doc-pi.onlyofficeEditor",
+        "*.oform": "doc-pi.onlyofficeEditor",
+        "*.xlsx": "doc-pi.onlyofficeEditor",
+        "*.xls": "doc-pi.onlyofficeEditor",
+        "*.xlsm": "doc-pi.onlyofficeEditor",
+        "*.xltx": "doc-pi.onlyofficeEditor",
+        "*.xltm": "doc-pi.onlyofficeEditor",
+        "*.ods": "doc-pi.onlyofficeEditor",
+        "*.csv": "doc-pi.onlyofficeEditor",
+        "*.tsv": "doc-pi.onlyofficeEditor",
+        "*.pptx": "doc-pi.onlyofficeEditor",
+        "*.ppt": "doc-pi.onlyofficeEditor",
+        "*.pptm": "doc-pi.onlyofficeEditor",
+        "*.potx": "doc-pi.onlyofficeEditor",
+        "*.ppsx": "doc-pi.onlyofficeEditor",
+        "*.odp": "doc-pi.onlyofficeEditor",
+        "*.pdf": "doc-pi.onlyofficeEditor",
+        "*.djvu": "doc-pi.onlyofficeEditor",
+        "*.xps": "doc-pi.onlyofficeEditor"
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test",
+    "build:vsix": "vsce package --allow-missing-repository"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "24.x",
+    "@types/vscode": "^1.100.0",
+    "@vscode/test-cli": "^0.0.15",
+    "@vscode/test-electron": "^3.0.0",
+    "@vscode/vsce": "^3.2.1",
+    "eslint": "^10.5.0",
+    "ts-loader": "^9.6.2",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.1",
+    "webpack": "^5.107.2",
+    "webpack-cli": "^7.0.3"
+  },
+  "overrides": {
+    "diff": "^8.0.4",
+    "serialize-javascript": "^7.0.6"
+  }
+}
