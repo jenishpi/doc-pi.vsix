@@ -77,7 +77,7 @@ This will run the production webpack build and package the extension into `doc-p
 
 **Via CLI:**
 ```bash
-code --install-extension doc-pi-0.0.3.vsix
+code --install-extension doc-pi-<version>.vsix
 ```
 
 **Via VS Code UI:**
@@ -85,3 +85,18 @@ code --install-extension doc-pi-0.0.3.vsix
 2. Click the `...` (More Actions) menu at the top-right of the Extensions panel.
 3. Select **Install from VSIX...** and choose the `.vsix` file.
 
+## 📄 License
+
+This project is licensed under the [Apache-2.0 License](LICENSE).
+
+<details>
+<summary>Third-party notices, trademarks & legal disclaimers</summary>
+
+- **Trademarks**:
+  - **ONLYOFFICE**: ONLYOFFICE is a registered trademark of Ascensio System SIA. This project is an independent VS Code extension and is not affiliated with, sponsored by, or endorsed by Ascensio System SIA.
+  - **Microsoft & Visual Studio Code**: Visual Studio Code, VS Code, Word, Excel, and PowerPoint are trademarks or registered trademarks of Microsoft Corporation in the United States and/or other countries. This extension is not affiliated with, sponsored by, or endorsed by Microsoft Corporation.
+- **Icons & Visual Assets**: The extension icon (`resources/doc-icon.svg`) and file-type icons (`resources/icons/*.svg`) were independently created for this project and simply display plain text of the corresponding file extensions (e.g., DOCX, XLSX, PPTX, PDF) and project name on simple geometric shapes. They do not incorporate any proprietary, third-party, or upstream logos or trademarks.
+- **Upstream Components & Licensing**: The document editor service and upstream ONLYOFFICE components (such as [ranuts/document](https://github.com/ranuts/document), sdkjs, and web-apps) retain their respective open-source licenses (e.g., AGPL-3.0, Apache-2.0). DOC-pi is an independent client that communicates with external editor services over standard HTTP APIs; it does not bundle or distribute the ONLYOFFICE document server software.
+- **Disclaimer**: This software is provided "as is", without warranty of any kind, express or implied. Always keep backups of critical documents before editing.
+
+</details>
